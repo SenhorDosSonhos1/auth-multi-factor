@@ -1,0 +1,22 @@
+Criarei um sistema de autenticação de multiplos fatores
+
+Criar o projeto = myprojeto
+    - Configuraçẽos básicas
+
+Criação do app = authenticacao
+    Configuraçẽos iniciais;
+    Criação das urls;
+    Criação das models;
+        Herdaremos da auth.user para cadastrar pelo email
+    autenticação segura;
+    Ao clickar em cadastrar 
+        O celery estara em segundo plano criando e enviando o token(Email criptografado + Python) pro email(Oauth)
+    O sistema irá automaticamente informar pro usuario olhar o email e clickar para confirmar o cadastro
+    O usuario será redirecionado para a plataforma com sucesso no cadastro.
+
+    Sessões para o usuario não burlar etapas
+
+Criação do frontend
+    Usos consideraveis:
+        Bootstrap;
+        Css puro;

@@ -5,6 +5,7 @@ Criar o projeto = myprojeto
 
 Criação do app = authenticacao
     Configuraçẽos iniciais;
+    
     Criação das urls;
     Criação das models;
         Herdaremos da auth.user para cadastrar pelo email

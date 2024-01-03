@@ -27,7 +27,7 @@ def valid_inputs(request, username, email, password, confirm_password):
         messages.add_message(request, constants.ERROR, 'O username precisa ter no máximo 16 caracteres.')
         return False
 
-    elif email.count() >= 1:
+    elif email.count(' ') >= 1:
         messages.add_message(request, constants.ERROR, 'O E-mail não pode conter espaços em brancos.')
         return False
     
@@ -35,19 +35,19 @@ def valid_inputs(request, username, email, password, confirm_password):
         messages.add_message(request, constants.ERROR, 'A senha precisater pelo menos 6 caracteres e no máximo 16.')
         return False
     
-    elif re.search(r'[a-z]', password):
+    elif not re.search(r'[a-z]', password):
         messages.add_message(request, constants.ERROR, 'A senha precisa ter pelos menos uma letra maiscula')
         return False
     
-    elif re.search(r'[A-Z]', password):
+    elif not re.search(r'[A-Z]', password):
         messages.add_message(request, constants.ERROR, 'A senha precisa ter pelos menos uma minuscula.')
         return False
     
-    elif re.search(r'[0-9]', password):
+    elif not re.search(r'[0-9]', password):
         messages.add_message(request, constants.ERROR, 'A senha precisa ter pelos menos um numero inteiro.')
         return False
     
-    elif re.search(r'[#&@%]', password):
+    elif not re.search(r'[#&@%]', password):
         messages.add_message(request, constants.ERROR, 'A senha precisa ter pelos menos uma e pelo menos um desses caracteres especiaais (#@$&%).')
         return False
     

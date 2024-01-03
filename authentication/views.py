@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.urls import reverse
 from authentication.utils import valid_inputs, blank_username
@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.contrib.messages import constants
 
 def login(request):
-    return HttpResponse('login')
+    return render(request, 'login.html')
 
 def register(request):
     if request.method == "GET":
@@ -29,25 +29,35 @@ def register(request):
         elif not valid_inputs(request, username_modified, email, password, confirm_password):
             return redirect(reverse('register'))
         
+        elif CustomUser.objects.filter(email=email).exists():
+            messages.add_message(request, constants.ERROR, 'Esse usuario já existe')
+            return redirect(reverse('register'))
         else:
             try:
-                user = CustomUser.objects.create(
+                user = CustomUser.objects.create_user(
                     username=username_modified,
                     email=email,
                     password=password
                 )
-                
-                token_and_mail(user)
 
-                return render(request, 'token_confirm.html')
-            except:
+                token = token_and_mail.delay(user.id)
+
+                messages.add_message(request, messages.INFO, 'Por favor, confirme seu e-mail através do link enviado.')
+                return redirect(reverse('login'))
+            
+            except Exception as e:
+                print(f"Error: {e}")
                 messages.add_message(request, constants.ERROR, 'Erro interno: Por favor, contate um administrador.')
                 return redirect(reverse('register'))
 
 def active_token(request, token):
     if request.method == "GET":
-        token = Token.objects.get(token=token)
+        token = get_object_or_404(Token, token=token)
         token.user.is_active = True
         token.active = True
 
+        token.user.save()
         token.save()
+
+        messages.add_message(request, constants.SUCCESS, 'Conta ativada com sucesso.')
+        return redirect(reverse('login'))

@@ -44,3 +44,6 @@ class Token(models.Model):
 
     def is_valid(self):
         return not self.is_used and timezone.now() < self.expiration_date
+    
+    def __str__(self) -> str:
+        return self.user.username

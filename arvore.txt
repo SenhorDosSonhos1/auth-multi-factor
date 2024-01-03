@@ -10,8 +10,31 @@ Criação do app = authenticacao
     Criação das models;
         Herdaremos da auth.user para cadastrar pelo email
     autenticação segura;
+        1. messages de error(Claras e consisas)
+
+        logica username:
+            minimo 3 caracteres e maximo 16 caracteres;
+            sem espaços em brancos nos inputs;
+            espaço somente com o underscor(_);
+            aceitar numeros inteiros(somente após letras).
+
+        logica email:
+            Verificar se há espaços em brancos na string;
+
+        logica senha: 
+            Pelo menos 1 letra maiscula;
+            1 letra minuscula;
+            1 caracter especial;
+            1 numero inteiro;
+            Minimo 6 caracteres e maximo 16 caracteres;
+            Sem campos vazios ou espaços nos inputs.
+
     Ao clickar em cadastrar 
-        O celery estara em segundo plano criando e enviando o token(Email criptografado + Python) pro email(Oauth)
+        Obs: O celery estara em segundo plano criando e enviando o token(Email criptografado + Python) pro email(Oauth)
+            Configuraçẽos do celery
+            Configuraçẽos do envio do email(Suporte a varios tipos de email)
+            Configuraçẽos da criação do token
+
     O sistema irá automaticamente informar pro usuario olhar o email e clickar para confirmar o cadastro
     O usuario será redirecionado para a plataforma com sucesso no cadastro.
 
@@ -21,3 +44,6 @@ Criação do frontend
     Usos consideraveis:
         Bootstrap;
         Css puro;
+
+Testes;
+    Testar manualmente e com django testes
